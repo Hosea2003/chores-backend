@@ -146,7 +146,15 @@ AUTHENTICATION_BACKENDS = [
 
 # REST FRAMEWORK
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("dj_rest_auth.jwt_auth.JWTCookieAuthentication",)
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-REST_AUTH = {"TOKEN_MODEL": None, "USE_JWT": True}
+REST_AUTH = {
+    "TOKEN_MODEL": None,
+    "USE_JWT": True,
+    "LOGIN_SERIALIZER": "identity.serializers.AppLoginSerializer",
+    "USER_DETAILS_SERIALIZER": "identity.serializers.AppUserDetailSerializer",
+}
