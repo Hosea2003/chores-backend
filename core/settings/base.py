@@ -22,6 +22,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = "identity.AppUser"
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -29,6 +31,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # apps
+    "identity",
+    # third party
+    "dj_rest_auth",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -117,3 +124,29 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Chores API",
+    "DESCRIPTION": "Collection of endpoints of Chores API",
+    "VERSION": "1.0.0",
+    "SWAGGER_UI_SETTINGS": """{
+        "deepLinking": true, 
+        "oauth2RedirectUrl": `${window.location.protocol}//${window.location.host}/api/static/drf_spectacular_sidecar/swagger-ui-dist/oauth2-redirect.html`,
+    }""",
+}
+
+
+TOKEN_MODEL = None
+
+# django
+AUTHENTICATION_BACKENDS = [
+    "identity.backends.AppAuthBackend",
+]
+
+# REST FRAMEWORK
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ("dj_rest_auth.jwt_auth.JWTCookieAuthentication",)
+}
+
+REST_AUTH = {"TOKEN_MODEL": None, "USE_JWT": True}
